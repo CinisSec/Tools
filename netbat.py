@@ -69,6 +69,7 @@ def main():
             port = int(a)
         else:
             assert False, "Unhandled Option"
+    
     # listen or just send data from stdin?
     if not listen and len(target) and port > 0:
 
@@ -94,7 +95,9 @@ def client_sender(buffer):
         client.connect((target, port))
 
         if len(buffer):
+            
             client.send(buffer)
+
         while True:
 
             #wait for data response
@@ -106,6 +109,9 @@ def client_sender(buffer):
                 data        = client.recv(4096)
                 recv_len    = len(data)
                 response   += data
+
+                if recv_len < 4096:
+                    break
 
             print response
 
@@ -124,6 +130,7 @@ def client_sender(buffer):
 
 def server_loop():
     global target
+    global port
 
     # if no target is definded, we listen on all interfaces
     if not len(target):
@@ -138,7 +145,7 @@ def server_loop():
         client_socket, addr = server.accept()
 
         # spin off a thread to handle new client
-        client_thread = threading.Thread(target=client_handler, args=(client_socket,))
+        client_thread = threading.Thread(target=client_handler,args=(client_socket,))
         client_thread.start()
 
 
@@ -148,8 +155,7 @@ def run_command(command):
 
     # run cmd and get output
     try:
-        output = subprocess.check_output(command, stderr=subprocess.STDOUT,
-                                         shell=True)
+        output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     except:
         output = "Failed to execute command.\r\n"
 
@@ -164,6 +170,7 @@ def client_handler(client_socket):
 
     # check for upload
     if len(upload_destination):
+        
         # read in all of the bytes and write to our destination
         file_buffer = ""
 
