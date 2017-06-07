@@ -87,46 +87,50 @@ def main():
         server_loop()
 
 def client_sender(buffer):
-
+        
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+                
     try:
-        # connect to target
-        client.connect((target, port))
-
-        if len(buffer):
+            # connect to our target host
+            client.connect((target,port))
             
-            client.send(buffer)
-
-        while True:
-
-            #wait for data response
-            recv_len = 1
-            response = ""
-
-            while recv_len:
-
-                data        = client.recv(4096)
-                recv_len    = len(data)
-                response   += data
-
-                if recv_len < 4096:
-                    break
-
-            print response
-
-            # wait for more input
-            buffer  = raw_input("")
-            buffer += "\n"
-
-            # send buffer
-            client.send(buffer)
+            # if we detect input from stdin send it 
+            # if not we are going to wait for the user to punch some in
+                
+            if len(buffer):
+                        
+                    client.send(buffer)
+                
+            while True:
+                        
+                    # now wait for data back
+                    recv_len = 1
+                    response = ""
+                        
+                    while recv_len:
+                            data     = client.recv(4096)
+                            recv_len = len(data)
+                            response+= data
+                                
+                             if recv_len < 4096:
+                                    break
+                        
+                    print response, 
+                        
+                   # wait for more input
+                    buffer = raw_input("")
+                    buffer += "\n"                        
+                        
+                    # send it off
+                    client.send(buffer)
+                        
+                
     except:
-
-        print "[*] Exception! Exiting."
-
-        # close connection
-        client.close()
+            # just catch generic errors - you can do your homework to beef this up
+            print "[*] Exception! Exiting."
+                
+            # teardown the connection                  
+            client.close() 
 
 def server_loop():
     global target
