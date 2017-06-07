@@ -1,3 +1,5 @@
+#!/opt/local/bin/python2.7
+
 import sys
 import socket
 import getopt
@@ -139,13 +141,13 @@ def server_loop():
         client_thread.start()
 
 
-def run_command():
+def run_command(command):
     # trim new line
-    trimdcommand = command.rstrip()
+    command = command.rstrip()
 
     # run cmd and get output
     try:
-        output = subprocess.check_output(trimdcommand, stderr=subprocess.STDOUT,
+        output = subprocess.check_output(command, stderr=subprocess.STDOUT,
                                          shell=True)
     except:
         output = "Failed to execute command.\r\n"
