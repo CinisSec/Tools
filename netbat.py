@@ -211,7 +211,7 @@ def client_handler(client_socket):
             # now we receive until linefeed (enter key)
             cmd_buffer = ""
             while "\n" not in cmd_buffer:
-                cmd_buffer += client_socket.recv(1024)
+                md_buffer += client_socket.recv(1024)
 
             # send back to cmd output
             response = run_command(cmd_buffer)
