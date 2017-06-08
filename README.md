@@ -6,4 +6,5 @@ This is a collection of tools I coded myself to get familiar with python
 [Needs python 2.7]
 
 There are some issues on windows. 
+
 Only compatible with python 2.7 => I'll see if I can convert it to 3.6
