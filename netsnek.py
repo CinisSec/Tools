@@ -73,7 +73,7 @@ def client_handler(client_socket):
 
         while True:
             # show a simple prompt
-            client_socket.send("<Netbat:#> ")
+            client_socket.send("<Netsnek:#> ")
 
             # now we receive until linefeed (enter key)
             cmd_buffer = ""
