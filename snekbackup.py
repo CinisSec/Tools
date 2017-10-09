@@ -3,7 +3,7 @@
 import sys
 import subprocess
 
-
+#TODO: Adding source folder
 if len(sys.argv) != 3:
     print("Srsly, you need 2 arguments or it won't work.")
     print("Usage: python2.7 snekbackup.py [regex] [destination folder] ")
